@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito | Shop.Mus</title>
+
+    <link rel="stylesheet" th:href="@{/css/carrito.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="top-bar">
+  Regístrate y obtén un 20% de descuento en tu primer pedido.
+</div>
+<!-- AQUI VA TU NAVBAR -->
+
+  <!-- NAVBAR -->
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+
+
+<!-- CONTENEDOR -->
+<section class="cart-page">
+
+    <!-- TITULO -->
+    <div class="cart-header">
+        <h1>TU CARRITO</h1>
+    </div>
+
+<div class="summary-row">
+    <span>Productos</span>
+<strong
+th:text="${#aggregates.sum(carrito.detalles.![cantidad])}">
+</strong>
+</div>
+    
+    <div class="cart-layout">
+
+
+
+<div class="cart-item"
+     th:if="${#lists.isEmpty(carrito.detalles)}">
+
+    <h2>Tu carrito está vacío</h2>
+
+    <a th:href="@{/productos}">
+        Ir a comprar
+    </a>
+
+</div>
+        <!-- IZQUIERDA -->
+<div class="cart-items">
+
+    <div class="cart-item"
+         th:if="${!#lists.isEmpty(carrito.detalles)}"
+         th:each="detalle : ${carrito.detalles}">
+
+        <img th:src="${detalle.producto.imagen != null}
+        ? @{'/uploads/productos/' + ${detalle.producto.imagen}}
+        : @{/img/producto.png}"
+     alt="">
+
+        <div class="item-info">
+
+            <div>
+
+                <h2 th:text="${detalle.producto.nombre}">
+                </h2>
+
+                <p th:text="${detalle.producto.descripcion}">
+                </p>
+
+            </div>
+
+            <strong
+                th:text="'S/ ' + ${detalle.precioUnitario * detalle.cantidad}">
+            </strong>
+
+        </div>
+
+        <div class="item-actions">
+
+            <div class="quantity-box">
+
+                <!-- DISMINUIR LOGUEADO -->
+                <a th:if="${#authorization.expression('isAuthenticated()')}"
+                   th:href="@{/carrito/disminuir/{id}(id=${detalle.idDetalle})}">
+                    -
+                </a>
+
+                <!-- DISMINUIR INVITADO -->
+                <a th:unless="${#authorization.expression('isAuthenticated()')}"
+                   th:href="@{/carrito/sesion/disminuir/{id}(id=${detalle.producto.idProducto})}">
+                    -
+                </a>
+
+                <span th:text="${detalle.cantidad}"></span>
+
+                <!-- AUMENTAR LOGUEADO -->
+                <a th:if="${#authorization.expression('isAuthenticated()')}"
+                   th:href="@{/carrito/aumentar/{id}(id=${detalle.idDetalle})}">
+                    +
+                </a>
+
+                <!-- AUMENTAR INVITADO -->
+                <a th:unless="${#authorization.expression('isAuthenticated()')}"
+                   th:href="@{/carrito/sesion/aumentar/{id}(id=${detalle.producto.idProducto})}">
+                    +
+                </a>
+
+            </div>
+
+            <!-- ELIMINAR LOGUEADO -->
+            <a class="delete-btn"
+               th:if="${#authorization.expression('isAuthenticated()')}"
+               th:href="@{/carrito/eliminar/{id}(id=${detalle.idDetalle})}">
+                🗑
+            </a>
+
+            <!-- ELIMINAR INVITADO -->
+            <a class="delete-btn"
+               th:unless="${#authorization.expression('isAuthenticated()')}"
+               th:href="@{/carrito/sesion/eliminar/{id}(id=${detalle.producto.idProducto})}">
+                🗑
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+        </div>
+
+        <!-- DERECHA -->
+        <div class="summary-box">
+
+    <h2>Resumen de pedido</h2>
+
+    <div class="summary-row discount">
+        <span>Descuento (-20%)</span>
+
+        <strong
+            th:text="'- S/ ' + ${descuento}">
+        </strong>
+    </div>
+
+    <div class="summary-row">
+        <span>Gastos de envío</span>
+
+        <strong
+            th:text="'S/ ' + ${envio}">
+        </strong>
+    </div>
+
+    <hr>
+
+    <div class="summary-row total">
+
+        <span>Total</span>
+
+        <strong
+            th:text="'S/ ' + ${totalFinal}">
+        </strong>
+
+    </div>
+
+   <a th:if="${#authorization.expression('isAuthenticated()')}"
+   th:href="@{/checkout}"
+   class="checkout-btn">
+    Finalizar compra →
+</a>
+
+<a th:unless="${#authorization.expression('isAuthenticated()')}"
+   th:href="@{/login}"
+   class="checkout-btn">
+    Iniciar sesión para comprar →
+</a>
+
+</div>
+
+    </div>
+
+</section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Shop.Mus &copy; 2024</p>
+  </footer>
+
+<script th:src="@{/js/carrito.js}"></script>
+
+</body>
+</html>

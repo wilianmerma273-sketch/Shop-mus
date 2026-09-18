@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Formulario Categoría | Shop.Mus</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/categoria-form.css}">
+</head>
+
+<body>
+
+<div class="form-container">
+
+    <div class="form-card">
+
+        <div class="form-header">
+
+            <h1>Formulario Categoría</h1>
+
+            <p>
+                Registra o actualiza una categoría del catálogo.
+            </p>
+
+        </div>
+
+        <form th:action="@{/crud/categorias/guardar}"
+              th:object="${categoria}"
+              method="post">
+
+            <input type="hidden"
+                   th:field="*{idCategoria}">
+
+            <div class="form-group">
+
+                <label>
+                    Nombre
+                </label>
+
+                <input type="text"
+                       th:field="*{nombre}"
+                       placeholder="Nombre de la categoría">
+
+                <div class="error-message"
+                     th:if="${#fields.hasErrors('nombre')}"
+                     th:errors="*{nombre}">
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Descripción
+                </label>
+
+                <textarea
+                        th:field="*{descripcion}"
+                        placeholder="Descripción de la categoría">
+                </textarea>
+
+                <div class="error-message"
+                     th:if="${#fields.hasErrors('descripcion')}"
+                     th:errors="*{descripcion}">
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+
+                <button type="submit"
+                        class="btn-primary-custom">
+
+                    Guardar
+
+                </button>
+
+                <a th:href="@{/crud/categorias}"
+                   class="btn-secondary-custom">
+
+                    Volver
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

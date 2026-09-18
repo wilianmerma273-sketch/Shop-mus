@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pago | Shop.Mus</title>
+
+    <link rel="stylesheet" th:href="@{/css/pago.css}">
+</head>
+<body>
+
+<section class="pago-container">
+
+    <div class="pago-card">
+
+        <h1 class="pago-title">
+            Confirmar Pago
+        </h1>
+
+        <div class="resumen-box">
+
+            <h2>Resumen</h2>
+
+            <p>
+                Total:
+                <strong th:text="'S/ ' + ${total}"></strong>
+            </p>
+
+            <p>
+                Total pagado:
+                <strong th:text="'S/ ' + ${pedido.totalFinal}"></strong>
+            </p>
+
+        </div>
+
+        <form th:action="@{/pago/confirmar}"
+              method="post">
+
+            <h3 class="metodo-title">
+                Selecciona un método de pago
+            </h3>
+
+            <div class="metodos-pago">
+
+                <label class="metodo-card">
+                    <input type="radio"
+                           name="metodo"
+                           value="TARJETA"
+                           checked
+                           onclick="mostrarMetodo('tarjeta')">
+
+                    <span>💳 Tarjeta</span>
+                </label>
+
+                <label class="metodo-card">
+                    <input type="radio"
+                           name="metodo"
+                           value="YAPE"
+                           onclick="mostrarMetodo('yape')">
+
+                    <span>📱 Yape</span>
+                </label>
+
+                <label class="metodo-card">
+                    <input type="radio"
+                           name="metodo"
+                           value="PLIN"
+                           onclick="mostrarMetodo('plin')">
+
+                    <span>📲 Plin</span>
+                </label>
+
+            </div>
+
+            <!-- TARJETA -->
+            <div id="tarjeta" class="metodo-content">
+
+                <div class="tarjeta-demo">
+                    <div class="chip"></div>
+
+                    <div class="numero-demo">
+                        **** **** **** 1234
+                    </div>
+
+                    <div class="tarjeta-footer">
+                        <span>TITULAR</span>
+                        <span>12/30</span>
+                    </div>
+                </div>
+
+                <input type="text"
+                       placeholder="Número de tarjeta">
+
+                <input type="text"
+                       placeholder="Nombre del titular">
+
+                <div class="row">
+                    <input type="text"
+                           placeholder="MM/AA">
+
+                    <input type="text"
+                           placeholder="CVV">
+                </div>
+
+            </div>
+
+            <!-- YAPE -->
+            <div id="yape"
+                 class="metodo-content hidden">
+
+                <h4>Paga con Yape</h4>
+
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=YAPE-PAGO"
+                     alt="QR Yape"
+                     class="qr-img">
+
+                <p>
+                    Escanea el código QR desde Yape.
+                </p>
+
+            </div>
+
+            <!-- PLIN -->
+            <div id="plin"
+                 class="metodo-content hidden">
+
+                <h4>Paga con Plin</h4>
+
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=PLIN-PAGO"
+                     alt="QR Plin"
+                     class="qr-img">
+
+                <p>
+                    Escanea el código QR desde Plin.
+                </p>
+
+            </div>
+
+            <button type="submit"
+                    class="btn-pagar">
+                Confirmar Pago
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+<script>
+    function mostrarMetodo(tipo) {
+
+        document.getElementById('tarjeta')
+            .classList.add('hidden');
+
+        document.getElementById('yape')
+            .classList.add('hidden');
+
+        document.getElementById('plin')
+            .classList.add('hidden');
+
+        document.getElementById(tipo)
+            .classList.remove('hidden');
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+<nav class="navbar" th:fragment="navbar">
+
+    <a th:href="@{/index}" class="logo">SHOP.MUS</a>
+
+    <ul class="nav-links">
+        <li><a th:href="@{/productos}">Productos</a></li>
+        <li><a th:href="@{/pedidos}">Pedidos</a></li>
+        <li sec:authorize="hasRole('ADMIN')">
+    <a th:href="@{/crud}">
+        CRUD de Productos
+    </a>
+</li>
+<li sec:authorize="hasRole('ADMIN')">
+    <a th:href="@{/crud/categorias}">
+        CRUD de Categorías
+    </a>
+</li>
+<li sec:authorize="hasRole('ADMIN')">
+
+    <a th:href="@{/reportes}">
+        📊 Reportes
+    </a>
+
+</li>
+
+    </ul>
+
+    
+
+    <div class="nav-icons">
+
+        
+
+        <a th:href="@{/carrito}" class="cart-btn">Cart</a>
+
+
+        <span sec:authorize="hasRole('ADMIN')">
+    👑 Administrador
+</span>
+
+<span sec:authorize="hasRole('CLIENTE')">
+    🛒 Cliente
+</span>
+
+        <!-- Usuario autenticado -->
+        <span th:if="${#authentication != null and #authentication.authenticated}">
+            Hola, <strong th:text="${#authentication.name}"></strong>
+        </span>
+
+        <!-- Si NO ha iniciado sesión -->
+        <a th:if="${#authentication == null or #authentication.name == 'anonymousUser'}"
+           th:href="@{/login}"
+           class="btn">
+            Login
+        </a>
+
+        <!-- Si inició sesión -->
+        <form th:if="${#authentication != null and #authentication.name != 'anonymousUser'}"
+      th:action="@{/logout}"
+      method="post"
+      style="display:inline; margin:0;">
+
+    <button type="submit" class="cart-btn logout-btn">
+        Salir
+    </button>
+
+</form>
+
+    </div>
+
+</nav>
+
+</body>
+</html>

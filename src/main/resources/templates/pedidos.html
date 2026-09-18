@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Pedidos | Shop.Mus</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/pedidos.css}">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+    Consulta y administra todos tus pedidos
+</div>
+
+<!-- NAVBAR -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+
+<!-- HEADER -->
+<section class="pedidos-header">
+
+    <h1>MIS PEDIDOS</h1>
+
+    <p>
+        Revisa el estado de tus compras y el historial de pedidos realizados.
+    </p>
+
+</section>
+
+<!-- PEDIDOS -->
+<section class="pedidos-container">
+<div class="pedido-card"
+     th:each="pedido : ${pedidos}">
+
+    <div class="pedido-top">
+
+        <div>
+            <span class="pedido-id">
+                Pedido #
+                <span th:text="${pedido.idPedido}"></span>
+            </span>
+
+            <h2>
+                Pedido realizado
+            </h2>
+        </div>
+
+        <span class="estado"
+              th:text="${pedido.estado}">
+        </span>
+
+    </div>
+
+    <div class="pedido-info">
+
+        <div class="pedido-details">
+
+            <p>
+                Total de productos:
+                <span th:text="${pedido.detalles.size()}"></span>
+            <span th:text="'S/ ' + ${pedido.totalFinal}">
+</span>
+            </p>
+
+            <div class="pedido-data">
+
+                <span>
+                    Fecha:
+                    <span th:text="${#temporals.format(pedido.fecha,'dd/MM/yyyy')}"></span>
+
+<p>
+    Fecha:
+    <span
+        th:text="${#temporals.format(
+            pedido.fecha,
+            'dd/MM/yyyy HH:mm'
+        )}">
+    </span>
+</p>
+
+                </span>
+
+                <span>
+                    Total:
+                    S/
+                    <span th:text="${pedido.total}"></span>
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="pedido-actions">
+
+        <a th:href="@{/exito/{id}(id=${pedido.idPedido})}"
+           class="details-btn">
+            Ver Detalles
+        </a>
+
+    </div>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>Shop.Mus &copy; 2024</p>
+</footer>
+
+</body>
+</html>

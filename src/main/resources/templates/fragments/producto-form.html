@@ -1,0 +1,81 @@
+<div th:fragment="productoForm">
+
+    <h2>Producto</h2>
+
+<form th:action="@{/crud/guardar}"
+      th:object="${producto}"
+      method="post"
+      enctype="multipart/form-data">
+        <input type="hidden"
+       id="idProducto"
+       th:field="*{idProducto}">
+
+        <div>
+            <label>Nombre</label>
+
+           <input type="text"
+       id="nombre"
+       th:field="*{nombre}">
+
+        <br>
+
+        <div>
+            <label>Descripción</label>
+
+<textarea
+       id="descripcion"
+       th:field="*{descripcion}">
+</textarea>        
+        </div>
+
+        <br>
+
+        <div>
+            <label>Stock</label>
+
+<input type="number"
+       id="stock"
+       th:field="*{stock}">        </div>
+
+        <br>
+
+        <div>
+            <label>Precio</label>
+
+            <input type="number" id="precio" step="0.01" th:field="*{precio}" required>
+        </div>
+
+        <br>
+
+        <div>
+
+            <label>Categoría</label>
+
+            <select id="categoria" th:field="*{categoria.idCategoria}" required>
+
+                <option value="">
+                    Seleccione una categoría
+                </option>
+
+                <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}"
+                    th:text="${categoria.nombre}">
+                </option>
+
+            </select>
+
+        </div>
+<div>
+    <label>Imagen</label>
+
+    <input type="file"
+           name="archivoImagen">
+</div>
+        <br>
+
+        <button type="submit">
+            Guardar
+        </button>
+
+    </form>
+
+</div>

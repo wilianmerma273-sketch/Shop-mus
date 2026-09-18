@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos | Shop.Mus</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/productos.css}">
+</head>
+<body>
+<div class="top-bar">
+  Regístrate y obtén un 20% de descuento en tu primer pedido.
+</div>
+
+
+  <!-- NAVBAR -->
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+
+<!-- TITULO -->
+<section class="header-products">
+    <h1>NUESTROS PRODUCTOS</h1>
+    <p>Encuentra el instrumento perfecto para ti</p>
+</section>
+
+<!-- PRODUCTOS -->
+<section class="productos-container" id="productosGrid">
+
+    <div class="producto-card"
+         th:each="producto : ${productos}">
+
+<img th:src="${producto.imagen != null} ?
+             @{'/uploads/productos/' + ${producto.imagen}} :
+             @{/img/producto.png}"
+     alt="Producto">
+        <div class="producto-info">
+
+            <h3 th:text="${producto.nombre}">
+                Nombre
+            </h3>
+
+            <div class="rating">
+                ★★★★★
+            </div>
+
+            <p class="descripcion"
+               th:text="${producto.descripcion}">
+            </p>
+
+            <div class="precio-box">
+
+                <span class="precio"
+                      th:text="'S/ ' + ${producto.precio}">
+                </span>
+
+            </div>
+
+            <p>
+                Stock:
+                <span th:text="${producto.stock}"></span>
+            </p>
+
+            <p>
+                Categoría:
+                <span th:text="${producto.categoria.nombre}"></span>
+            </p>
+
+            <form th:action="@{/carrito/agregar/{id}(id=${producto.idProducto})}"
+      method="post">
+
+    <button type="submit">
+        Agregar al carrito
+    </button>
+
+</form>
+
+        </div>
+
+    </div>
+
+</section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Shop.Mus &copy; 2024</p>
+  </footer>
+
+<script th:src="@{/js/productos.js}"></script>
+
+</body>
+</html>

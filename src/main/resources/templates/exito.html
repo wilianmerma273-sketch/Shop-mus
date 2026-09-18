@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Compra Exitosa | Shop.Mus</title>
+
+    <link rel="stylesheet" th:href="@{/css/exito.css}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="success-container">
+
+    <div class="success-card">
+
+        <div class="icon">
+            ✅
+        </div>
+
+        <h1>¡Compra realizada con éxito!</h1>
+
+        <p>
+            Gracias por confiar en Shop.Mus.
+        </p>
+
+        <p>
+            Tu pedido ha sido registrado correctamente.
+        </p>
+
+        <div class="pedido-info">
+
+            <h3>
+                Pedido N°
+                <span th:text="${pedido.idPedido}">
+                    1
+                </span>
+            </h3>
+
+<p>
+    Fecha del pedido:
+    <strong
+        th:text="${#temporals.format(
+            pedido.fecha,
+            'dd/MM/yyyy HH:mm'
+        )}">
+    </strong>
+</p>
+
+            <p>
+                Estado:
+                <strong th:text="${pedido.estado}">
+                    COMPLETADO
+                </strong>
+            </p>
+
+            <p>
+                Total pagado:
+                <strong th:text="'S/ ' + ${pedido.totalFinal}">
+</strong>
+            </p>
+<a th:href="@{/factura/{id}(id=${pedido.idPedido})}"
+   class="btn secondary">
+
+    Ver Factura
+
+</a>
+
+<div class="productos-pedido">
+
+    <h3>Productos comprados</h3>
+    
+
+    <div th:each="detalle : ${pedido.detalles}"
+         class="producto-item">
+
+        <h4 th:text="${detalle.producto.nombre}"></h4>
+
+        <p>
+            Cantidad:
+            <span th:text="${detalle.cantidad}"></span>
+        </p>
+
+        <p>
+            Precio Unitario:
+            <span th:text="'S/ ' + ${detalle.precioUnitario}"></span>
+        </p>
+
+        <p>
+            Subtotal:
+            <strong
+                th:text="'S/ ' + ${detalle.precioUnitario * detalle.cantidad}">
+            </strong>
+        </p>
+
+    </div>
+
+</div>
+
+            
+        </div>
+
+        <div class="actions">
+
+            <a th:href="@{/index}" class="btn">
+                Volver al inicio
+            </a>
+
+            <a th:href="@{/pedidos}" class="btn secondary">
+                Mis pedidos
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

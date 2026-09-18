@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Categorías | Shop.Mus</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/categorias.css}">
+</head>
+
+<body>
+
+<div class="categorias-container">
+
+    <div class="categorias-card">
+
+        <div class="categorias-header">
+
+            <div>
+                <h1>Gestión de Categorías</h1>
+                <p>Administra las categorías de la tienda.</p>
+            </div>
+
+            <div class="header-actions">
+
+                <a th:href="@{/index}"
+                   class="btn-secondary-custom">
+                    ⬅ Volver al Inicio
+                </a>
+
+                <a th:href="@{/crud/categorias/nuevo}"
+                   class="btn-primary-custom">
+                    + Nueva Categoría
+                </a>
+
+            </div>
+
+        </div>
+
+        <table class="categorias-table">
+
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="categoria : ${categorias}">
+
+                <td th:text="${categoria.idCategoria}"></td>
+
+                <td th:text="${categoria.nombre}"></td>
+
+                <td th:text="${categoria.descripcion}"></td>
+
+                <td>
+
+                    <div class="acciones">
+
+                        <a th:href="@{/crud/categorias/editar/{id}(id=${categoria.idCategoria})}"
+                           class="btn-edit">
+
+                            Editar
+
+                        </a>
+
+                        <a th:href="@{/crud/categorias/eliminar/{id}(id=${categoria.idCategoria})}"
+                           class="btn-delete"
+                           onclick="return confirm('¿Eliminar categoría?')">
+
+                            Eliminar
+
+                        </a>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

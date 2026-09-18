@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>CRUD Productos | Shop.Mus</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/crud.css}">
+</head>
+<script>
+
+function abrirModal(){
+    document
+        .getElementById("modalProducto")
+        .style.display = "block";
+}
+
+function cerrarModal(){
+    document
+        .getElementById("modalProducto")
+        .style.display = "none";
+}
+
+window.onclick = function(event){
+
+    let modal =
+        document.getElementById("modalProducto");
+
+    if(event.target == modal){
+        cerrarModal();
+    }
+}
+
+
+async function editarProducto(id){
+
+    const response =
+        await fetch('/crud/producto/' + id);
+
+    const producto =
+        await response.json();
+
+    document.getElementById("idProducto").value =
+        producto.idProducto;
+
+    document.getElementById("nombre").value =
+        producto.nombre;
+
+    document.getElementById("descripcion").value =
+        producto.descripcion;
+
+    document.getElementById("stock").value =
+        producto.stock;
+
+    document.getElementById("precio").value =
+        producto.precio;
+
+    document.getElementById("categoria").value =
+        producto.categoria.idCategoria;
+
+    abrirModal();
+}
+
+
+function nuevoProducto(){
+
+    document.getElementById("idProducto").value = "";
+    document.getElementById("nombre").value = "";
+    document.getElementById("descripcion").value = "";
+    document.getElementById("stock").value = 0;
+    document.getElementById("precio").value = "";
+    document.getElementById("categoria").selectedIndex = 0;
+
+    abrirModal();
+}
+
+</script>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+    Administra todos los productos de Shop.Mus
+</div>
+
+<!-- NAVBAR -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+
+<!-- CRUD -->
+<section class="crud-container">
+
+    <div class="crud-header">
+
+        <div>
+            <h1>CRUD DE PRODUCTOS</h1>
+            <p>Gestiona todos los productos de la tienda</p>
+        </div>
+
+        <button class="add-btn"
+        onclick="nuevoProducto()">
+    + Nuevo Producto
+</button>
+
+    </div>
+
+    <!-- TABLA -->
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Stock</th>
+                    <th>Precio</th>
+                    <th>ID Categoría</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+<tr th:each="producto : ${productos}">
+
+    <td th:text="${producto.idProducto}"></td>
+
+    <td>
+        <img th:src="@{'/uploads/productos/' + ${producto.imagen}}">
+    </td>
+
+    <td th:text="${producto.nombre}"></td>
+
+    <td th:text="${producto.descripcion}"></td>
+
+    <td th:text="${producto.stock}"></td>
+
+    <td th:text="${producto.precio}"></td>
+
+    <td th:text="${producto.categoria.idCategoria}"></td>
+
+    <td class="actions">
+
+      <button type="button"
+        class="edit-btn"
+        th:onclick="|editarProducto(${producto.idProducto})|">
+    Editar
+</button>
+
+        <a th:href="@{/crud/eliminar/{id}(id=${producto.idProducto})}"
+   class="delete-btn">
+   Eliminar
+</a>
+
+    </td>
+
+</tr>
+
+</tbody>
+
+        </table>
+
+    </div>
+
+    <div id="modalProducto" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close"
+              onclick="cerrarModal()">
+            &times;
+        </span>
+
+        <div th:replace="~{fragments/producto-form :: productoForm}">
+        </div>
+
+    </div>
+
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>Shop.Mus &copy; 2024</p>
+</footer>
+
+</body>
+</html>

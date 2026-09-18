@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | Shop.Mus</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/checkout.css}">
+</head>
+
+<body>
+
+<section class="checkout-container">
+
+    <div class="checkout-card">
+
+        <div class="checkout-header">
+
+            <h1>Información de Envío</h1>
+
+            <p>
+                Completa tus datos para continuar con la compra.
+            </p>
+
+        </div>
+
+        <form th:action="@{/checkout}"
+              th:object="${envio}"
+              method="post"
+              class="checkout-form">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Nombres</label>
+                    <input type="text"
+                           th:field="*{nombres}"
+                           placeholder="Ingresa tus nombres">
+                </div>
+
+                <div class="form-group">
+                    <label>Apellidos</label>
+                    <input type="text"
+                           th:field="*{apellidos}"
+                           placeholder="Ingresa tus apellidos">
+                </div>
+
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="text"
+                           th:field="*{telefono}"
+                           placeholder="999 999 999">
+                </div>
+
+                <div class="form-group">
+                    <label>Departamento</label>
+                    <input type="text"
+                           th:field="*{departamento}"
+                           placeholder="Arequipa">
+                </div>
+
+                <div class="form-group">
+                    <label>Provincia</label>
+                    <input type="text"
+                           th:field="*{provincia}"
+                           placeholder="Arequipa">
+                </div>
+
+                <div class="form-group">
+                    <label>Distrito</label>
+                    <input type="text"
+                           th:field="*{distrito}"
+                           placeholder="Cerro Colorado">
+                </div>
+
+            </div>
+
+            <div class="form-group full-width">
+
+                <label>Dirección</label>
+
+                <input type="text"
+                       th:field="*{direccion}"
+                       placeholder="Av., Calle, Urbanización">
+
+            </div>
+
+            <div class="form-group full-width">
+
+                <label>Referencia</label>
+
+                <textarea
+                        th:field="*{referencia}"
+                        placeholder="Ejemplo: Casa color blanco frente al parque">
+                </textarea>
+
+            </div>
+
+            <div class="checkout-actions">
+
+                <button type="submit"
+                        class="checkout-btn">
+                    Continuar al Pago
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+</body>
+</html>

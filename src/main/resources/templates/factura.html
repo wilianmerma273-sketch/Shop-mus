@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Factura | Shop.Mus</title>
+
+    <!-- Estilos generales -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- Estilos de factura -->
+    <link rel="stylesheet" th:href="@{/css/factura.css}">
+</head>
+
+<body>
+
+<div class="factura-container">
+
+    <div class="factura-card">
+
+        <div class="factura-header">
+
+            <h1>FACTURA</h1>
+
+            <div class="factura-badge">
+                <span>N°</span>
+
+                <strong th:text="${factura.numeroFactura}">
+                </strong>
+            </div>
+
+        </div>
+
+        <div class="info-grid">
+
+            <div class="info-box">
+
+                <h3>Información de Factura</h3>
+
+                <p>
+                    Fecha:
+                    <strong
+                        th:text="${#temporals.format(
+                            factura.fechaEmision,
+                            'dd/MM/yyyy HH:mm'
+                        )}">
+                    </strong>
+                </p>
+
+            </div>
+
+            <div class="info-box">
+
+                <h3>Cliente</h3>
+
+                <p th:text="${pedido.usuario.nombre}">
+                </p>
+
+                <p th:text="${pedido.usuario.email}">
+                </p>
+
+                <div th:if="${pedido.envio != null}">
+
+                    <p>
+                        Dirección:
+                        <span th:text="${pedido.envio.direccion}">
+                        </span>
+                    </p>
+
+                    <p>
+                        Distrito:
+                        <span th:text="${pedido.envio.distrito}">
+                        </span>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <table class="factura-table">
+
+            <thead>
+
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="detalle : ${pedido.detalles}">
+
+                <td th:text="${detalle.producto.nombre}">
+                </td>
+
+                <td th:text="${detalle.cantidad}">
+                </td>
+
+                <td th:text="'S/ ' + ${detalle.precioUnitario}">
+                </td>
+
+                <td th:text="'S/ ' +
+                    ${detalle.precioUnitario * detalle.cantidad}">
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+        <div class="factura-total">
+
+            <span>Total</span>
+
+            <strong th:text="'S/ ' + ${factura.total}">
+            </strong>
+
+        </div>
+
+        <div class="actions">
+
+            <button
+                onclick="window.print()"
+                class="btn">
+
+                Imprimir Factura
+
+            </button>
+
+            <a th:href="@{/index}"
+               class="btn secondary">
+
+                Volver al inicio
+
+            </a>
+
+            <a th:href="@{/pedidos}"
+               class="btn secondary">
+
+                Mis pedidos
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+.checkout-container {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 20px;
+}
+
+.checkout-card {
+    background: var(--color-blanco);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    box-shadow: var(--shadow);
+}
+
+.checkout-header {
+    margin-bottom: 35px;
+    padding-bottom: 25px;
+    border-bottom: 2px solid var(--color-negro);
+}
+
+.checkout-header h1 {
+    font-size: 48px;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.checkout-header p {
+    color: var(--color-texto);
+    font-size: 15px;
+}
+
+.checkout-form {
+    width: 100%;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radius-md);
+    padding: 15px 18px;
+    font-size: 14px;
+    font-family: var(--fuente);
+    outline: none;
+    transition: .25s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--color-negro);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.full-width {
+    margin-top: 25px;
+}
+
+.checkout-actions {
+    margin-top: 35px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.checkout-btn {
+    background: var(--color-negro);
+    color: var(--color-blanco);
+    border: none;
+    border-radius: var(--radius-xl);
+    padding: 16px 40px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.checkout-btn:hover {
+    opacity: .85;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+
+    .checkout-card {
+        padding: 25px;
+    }
+
+    .checkout-header h1 {
+        font-size: 34px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .checkout-actions {
+        justify-content: stretch;
+    }
+
+    .checkout-btn {
+        width: 100%;
+    }
+
+}
