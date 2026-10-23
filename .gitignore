@@ -34,4 +34,4 @@ build/
 
 ### Archivos locales y privados ###
 .env
-uploads/
+uploads
