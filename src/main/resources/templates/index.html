@@ -29,7 +29,7 @@
       <a href="/productos" class="btn">Shop Now</a>
     </div>
     <!-- Reemplaza "hero.png" con el nombre de tu imagen en static/img/ -->
-    <img th:src="@{/img/hero.png}" src="/img/hero.png" alt="hero" class="hero-img"/>
+    <img th:src="@{/img/hero.png}" src="/uploads/productos/hero.png" alt="hero" class="hero-img"/>
   </section>
 
   <!-- PRODUCTOS -->
@@ -42,8 +42,8 @@
     <div class="product-card"
          th:each="producto : ${productosDestacados}">
 
-        <img th:src="@{'/uploads/productos/' + ${producto.imagen}}"
-             alt="Producto">
+        <!-- Cambiamos /uploads/productos/ por /img/ -->
+        <img th:src="@{'/uploads/productos/' + ${producto.imagen}}" alt="Producto">
 
         <h3 th:text="${producto.nombre}">
             Nombre
